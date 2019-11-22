@@ -30,12 +30,16 @@ import com.anushka.androidtutz.contactmanager.db.entity.Contact;
 
 import java.util.ArrayList;
 
+import javax.inject.Inject;
+
 public class MainActivity extends AppCompatActivity {
 
     private ContactsAdapter contactsAdapter;
     private ArrayList<Contact> contactArrayList = new ArrayList<>();
     private RecyclerView recyclerView;
-    private ContactsAppDatabase contactsAppDatabase;
+
+    @Inject
+    public ContactsAppDatabase contactsAppDatabase;
    // private DatabaseHelper db;
 
 
@@ -47,11 +51,13 @@ public class MainActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
         getSupportActionBar().setTitle(" Contacts Manager");
 
+        App.getApp().getContactAppComponent().inject(this);
+
         recyclerView = findViewById(R.id.recycler_view_contacts);
      //   db = new DatabaseHelper(this);
-        contactsAppDatabase = Room.databaseBuilder(getApplicationContext(), ContactsAppDatabase.class, "ContactDB")
+        /*contactsAppDatabase = Room.databaseBuilder(getApplicationContext(), ContactsAppDatabase.class, "ContactDB")
                 .addCallback(callback)
-                .build();
+                .build();*/
 
         new GetAllContactsAsyncTesk().execute();
 
